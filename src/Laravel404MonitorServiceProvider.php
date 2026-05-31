@@ -15,13 +15,33 @@ class Laravel404MonitorServiceProvider extends ServiceProvider
         );
     }
 
-    public function boot(): void
+   public function boot(): void
     {
         $this->publishAssets();
         $this->loadMigrations();
         $this->loadViews();
         $this->registerRoutes();
         $this->registerMiddleware();
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\InfoCommand::class,
+            ]);
+        }
+    }
+
+    protected function printSuccessMessage(): void
+    {
+        $this->callAfterResolving('events', function () {
+            $prefix = config('404monitor.route_prefix', '_404-monitor');
+            $url = url($prefix);
+
+            \Illuminate\Support\Facades\Artisan::command('404monitor:info', function () use ($url) {
+                $this->info("✅ 404 Monitor is active.");
+                $this->line("   Dashboard → {$url}");
+                $this->line("   Publish config: php artisan vendor:publish --tag=404monitor-config");
+            });
+        });
     }
 
     protected function publishAssets(): void

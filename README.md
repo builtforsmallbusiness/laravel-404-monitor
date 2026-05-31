@@ -35,6 +35,14 @@ php artisan vendor:publish --tag=404monitor-config
 
 That's it. The middleware registers itself automatically via the service provider.
 
+After installing, run this to confirm the dashboard URL:
+
+```bash
+php artisan 404monitor:info
+```
+
+
+
 ## Dashboard
 
 Access the dashboard at `/_404-monitor` (requires authentication by default).
@@ -107,8 +115,13 @@ Schedule::command('404monitor:clean')->daily();
 
 Or run manually:
 
+## Artisan Commands
+
 ```bash
-php artisan 404monitor:clean
+| Command | Description |
+|---------|-------------|
+| `php artisan 404monitor:info` | Display dashboard URL and setup info |
+| `php artisan 404monitor:clean` | Remove records older than retention period |
 ```
 
 ## Customising the Dashboard View
