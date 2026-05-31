@@ -2,8 +2,9 @@
 
 namespace BuiltForSmallBusiness\Laravel404Monitor;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 
 class Laravel404MonitorServiceProvider extends ServiceProvider
 {
@@ -22,12 +23,20 @@ class Laravel404MonitorServiceProvider extends ServiceProvider
         $this->loadViews();
         $this->registerRoutes();
         $this->registerMiddleware();
+        $this->registerGate();
 
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\InfoCommand::class,
             ]);
         }
+    }
+
+    protected function registerGate(): void
+    {
+        Gate::define('view-404-monitor', function ($user) {
+            return false; // denied by default, developer overrides this
+        });
     }
 
     protected function printSuccessMessage(): void

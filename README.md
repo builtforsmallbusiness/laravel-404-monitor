@@ -42,6 +42,67 @@ php artisan 404monitor:info
 ```
 
 
+## Protecting the Dashboard
+
+By default, the dashboard is denied to all users until you explicitly grant access.
+This is intentional — the package does not assume how your application manages admin access.
+
+To grant access, add a gate definition to your `App\Providers\AppServiceProvider`:
+
+```php
+use Illuminate\Support\Facades\Gate;
+
+public function boot(): void
+{
+    Gate::define('view-404-monitor', function ($user) {
+        return $user->is_admin; // your own logic here
+    });
+}
+```
+
+### Common examples
+
+**Using a boolean column on your users table:**
+```php
+Gate::define('view-404-monitor', function ($user) {
+    return $user->is_admin;
+});
+```
+
+**Using a role string:**
+```php
+Gate::define('view-404-monitor', function ($user) {
+    return $user->role === 'admin';
+});
+```
+
+**Using Spatie Laravel Permission:**
+```php
+Gate::define('view-404-monitor', function ($user) {
+    return $user->hasRole('admin');
+});
+```
+
+**Allowing specific emails (useful for small apps):**
+```php
+Gate::define('view-404-monitor', function ($user) {
+    return in_array($user->email, [
+        'you@yourdomain.com',
+    ]);
+});
+```
+
+**Local environment only (during development):**
+```php
+Gate::define('view-404-monitor', function ($user) {
+    return app()->environment('local');
+});
+```
+
+> **Note:** The gate receives the currently authenticated user.
+> Make sure your dashboard route is also protected by the `auth` middleware
+> (set by default in `config/404monitor.php`).
+
 
 ## Dashboard
 
@@ -151,6 +212,8 @@ FailedRequest::recentlyActive(24)->get();
 // Broken internal links
 FailedRequest::where('source', 'internal')->get();
 ```
+
+
 
 ## Why this exists
 
