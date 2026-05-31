@@ -51,13 +51,17 @@ class Track404Middleware
         }
     }
 
-    protected function shouldIgnore(string $url, string $userAgent): bool
+  protected function shouldIgnore(string $url, string $userAgent): bool
     {
         $ignoredUrls = config('404monitor.ignored_urls', []);
 
         foreach ($ignoredUrls as $pattern) {
-            $regex = '/^' . str_replace(['\*', '/'], ['.*', '\/'], preg_quote($pattern, '/')) . '$/i';
-            if (preg_match($regex, '/' . ltrim($url, '/'))) {
+            // Convert wildcard pattern to regex
+            $escaped = preg_quote(ltrim($pattern, '/'), '#');
+            $escaped = str_replace('\*', '.*', $escaped);
+            $regex = '#^' . $escaped . '$#i';
+
+            if (preg_match($regex, ltrim($url, '/'))) {
                 return true;
             }
         }
