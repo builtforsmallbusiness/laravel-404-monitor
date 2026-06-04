@@ -22,4 +22,5 @@ class InfoCommand extends Command
         $this->line("  Views      → php artisan vendor:publish --tag=404monitor-views");
         $this->info('');
     }
+    
 }
