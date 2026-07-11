@@ -178,12 +178,12 @@ Or run manually:
 
 ## Artisan Commands
 
-```bash
+
 | Command | Description |
 |---------|-------------|
 | `php artisan 404monitor:info` | Display dashboard URL and setup info |
 | `php artisan 404monitor:clean` | Remove records older than retention period |
-```
+
 
 ## Customising the Dashboard View
 
