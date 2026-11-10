@@ -2,7 +2,7 @@
 
 A lightweight 404 monitoring dashboard for Laravel applications. Track missing pages, identify broken internal links, monitor Googlebot crawl errors, and understand where your 404 traffic comes from — all without touching a log file.
 
-![Laravel](https://img.shields.io/badge/Laravel-10%2B-red) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+![Laravel](https://img.shields.io/badge/Laravel-11%2B-red) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Features
 
@@ -13,6 +13,12 @@ A lightweight 404 monitoring dashboard for Laravel applications. Track missing p
 - **Last seen timestamps** — know if a problem is ongoing or historical
 - **Built-in dashboard** — clean UI with search, source filtering, and clear actions
 - **Zero dependencies** — no frontend framework required, dashboard is self-contained
+
+
+## Screenshots
+
+![Business Name Generator](https://github.com/builtforsmallbusiness/laravel-404-monitor/blob/6aae36d8618edb64bf50355a307d1147ebd6e303/404-minitor.png)
+
 
 ## Installation
 
